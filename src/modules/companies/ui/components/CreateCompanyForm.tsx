@@ -1,16 +1,6 @@
 import React from "react";
-import {CompaniesBehavior, useCompanies} from "@/src/modules/companies/ui/hooks/useCompanies";
-import {
-    Plus,
-    X,
-    Building2,
-    Phone,
-    MapPin,
-    AlertCircle,
-    Check,
-    Loader2,
-    Mail, Calendar,
-} from "lucide-react";
+import {CompaniesBehavior} from "@/src/modules/companies/ui/hooks/useCompanies";
+import {AlertCircle, Building2, Calendar, Check, Loader2, Mail, MapPin, Phone, Plus, X,} from "lucide-react";
 
 type OwnProps = {
     companiesBehavior: CompaniesBehavior
@@ -27,7 +17,6 @@ const CreateCompanyForm: React.FC<OwnProps> = ({companiesBehavior}) => {
         error,
         handleOpen,
         onSubmit,
-        handleUpdateCompany,
         isEdit
     } = companiesBehavior;
 

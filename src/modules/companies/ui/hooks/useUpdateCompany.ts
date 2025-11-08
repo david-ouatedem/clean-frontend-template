@@ -8,10 +8,8 @@ export const useUpdateCompany = () => {
 
     return useMutation({
         mutationFn: (data: UpdateCompanyCommand) => updateCompanyUseCase.execute(data),
-        onSuccess: (res) => {
-            // here call toast instead
-            console.log(res.message);
-            queryClient.invalidateQueries({ queryKey: ['companies'] });
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['companies']});
         },
     });
 }

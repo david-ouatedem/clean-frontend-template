@@ -1,5 +1,5 @@
 import React from 'react';
-import {AlertCircle, Building2, Loader2} from "lucide-react";
+import {AlertCircle, Building2, Loader2, Plus} from "lucide-react";
 import {useCompanies} from "@/src/modules/companies/ui/hooks/useCompanies";
 import CompanyCard from "@/src/modules/companies/ui/components/CompanyCard";
 import CreateCompanyForm from "@/src/modules/companies/ui/components/CreateCompanyForm";
@@ -8,7 +8,10 @@ const ListCompaniesView = () => {
     const companiesBehavior = useCompanies();
     const {
         getCompaniesBehavior,
-        handleOpenForEdit
+        handleOpenForEdit,
+        handleDeleteCompany,
+        handleOpen,
+        isOpen
     } = companiesBehavior;
     const {data: companies, isLoading, isError, error} = getCompaniesBehavior;
 
@@ -38,7 +41,17 @@ const ListCompaniesView = () => {
             <div className="text-center py-16">
                 <Building2 className="mx-auto text-gray-300 mb-4" size={48}/>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No companies yet</h3>
-                <p className="text-gray-600">Get started by creating your first company</p>
+                <p className="text-gray-600 mb-5">Get started by creating your first company</p>
+                <button
+                    onClick={handleOpen}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+                >
+                    <Plus size={20}/>
+                    Add Company
+                </button>
+                {
+                    isOpen && <CreateCompanyForm companiesBehavior={companiesBehavior}/>
+                }
             </div>
         );
     }
@@ -60,6 +73,7 @@ const ListCompaniesView = () => {
                             key={company.id}
                             company={company}
                             handleOpenEdit={handleOpenForEdit}
+                            handleDelete={handleDeleteCompany}
                         />
                     ))}
                 </div>

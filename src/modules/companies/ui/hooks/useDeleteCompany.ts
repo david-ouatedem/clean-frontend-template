@@ -1,15 +1,15 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {companyDependencies} from "@/src/modules/companies/infra/di/container";
-import {CreateCompanyCommand} from "@/src/modules/companies/application/useCases/CreateCompanyUseCase";
+import {DeleteCompanyCommand} from "@/src/modules/companies/application/useCases/DeleteCompanyUseCase";
 
-export const useCreateCompany = () => {
+export const useDeleteCompany = () => {
     const queryClient = useQueryClient();
-    const createCompanyUseCase = companyDependencies.resolve('CreateCompanyUseCase');
+    const deleteCompanyUseCase = companyDependencies.resolve('DeleteCompanyUseCase');
 
     return useMutation({
-        mutationFn: (data: CreateCompanyCommand) => createCompanyUseCase.execute(data),
+        mutationFn: (data: DeleteCompanyCommand) => deleteCompanyUseCase.execute(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companies'] });
         },
     });
-};
+}

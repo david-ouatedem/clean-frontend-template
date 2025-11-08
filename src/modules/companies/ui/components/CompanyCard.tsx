@@ -4,11 +4,13 @@ import {Building2, Edit, Mail, MapPin, Phone, Trash} from "lucide-react";
 type OwnProps = {
     company: Company
     handleOpenEdit: (company: Company) => void
+    handleDelete: (id: string) => void
 }
 
 const CompanyCard: React.FC<OwnProps> = ({
                                              company,
                                              handleOpenEdit,
+                                             handleDelete
                                          }) => {
     const date = new Date(company.creationDate).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -28,10 +30,11 @@ const CompanyCard: React.FC<OwnProps> = ({
                     </div>
                 </div>
                 <div className={"flex items-center gap-3"}>
-                    <button onClick={() => handleOpenEdit(company)} className={"border border-gray-400 p-1 rounded-md"} type="button">
+                    <button onClick={() => handleOpenEdit(company)} className={"border border-gray-400 p-1 rounded-md"}
+                            type="button">
                         <Edit size={16} className="text-gray-400"/>
                     </button>
-                    <button className={"border border-red-400 p-1 rounded-md"} type="button">
+                    <button onClick={() => handleDelete(company.id)} className={"border border-red-400 p-1 rounded-md"} type="button">
                         <Trash size={16} className="text-red-400"/>
                     </button>
                 </div>

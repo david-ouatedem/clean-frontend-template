@@ -10,6 +10,7 @@ import {useState} from "react";
 import {useUpdateCompany} from "@/src/modules/companies/ui/hooks/useUpdateCompany";
 import {Company} from "@/src/modules/companies/domain/entities/Company";
 import {UpdateCompanyCommand} from "@/src/modules/companies/application/useCases/UpdateCompanyUseCase";
+import {useDeleteCompany} from "@/src/modules/companies/ui/hooks/useDeleteCompany";
 
 export type CompaniesBehavior = ReturnType<typeof useCompanies>;
 
@@ -29,6 +30,7 @@ export const useCompanies = () => {
     const getCompaniesBehavior = useGetCompanies();
     const createCompaniesBehavior = useCreateCompany()
     const updateCompanyBehavior = useUpdateCompany()
+    const deleteCompanyBehavior = useDeleteCompany()
 
     const {mutate: createCompany, isPending, error, isSuccess, reset} = createCompaniesBehavior;
 
@@ -39,6 +41,14 @@ export const useCompanies = () => {
         isSuccess: isUpdateSuccess,
         reset: updateReset
     } = updateCompanyBehavior;
+
+    const {
+        mutate: deleteCompany,
+        isPending: isDeletePending,
+        error: deleteError,
+        isSuccess: isDeleteSuccess,
+        reset: deleteReset
+    } = deleteCompanyBehavior;
 
     const [isOpen, setIsOpen] = useState(false);
     const [companyToUpdateId, setCompanyToUpdateId] = useState<string | null>(null);
@@ -87,6 +97,19 @@ export const useCompanies = () => {
         })
     }
 
+    function handleDeleteCompany(companyId: string) {
+        deleteCompany({
+            companyId
+        }, {
+            onSuccess: (res) => {
+                console.log(res.message)
+                setTimeout(() => {
+                    handleClose()
+                }, 1500);
+            }
+        })
+    }
+
     function handleOpen() {
         setIsOpen(true);
     }
@@ -95,6 +118,7 @@ export const useCompanies = () => {
         setIsOpen(false);
         reset()
         updateReset();
+        deleteReset();
         resetForm();
         setCompanyToUpdateId(null);
     }
@@ -123,9 +147,9 @@ export const useCompanies = () => {
 
     return {
         handleOpen,
-        isPending: isPending || isUpdatePending,
-        isSuccess: isSuccess || isUpdateSuccess,
-        error: error || updateError,
+        isPending: isPending || isUpdatePending || isDeletePending,
+        isSuccess: isSuccess || isUpdateSuccess || isDeleteSuccess,
+        error: error || updateError || deleteError,
         handleChange,
         isOpen,
         handleClose,
@@ -136,6 +160,7 @@ export const useCompanies = () => {
         onSubmit,
         handleUpdateCompany,
         isEdit: !!companyToUpdateId,
-        handleOpenForEdit
+        handleOpenForEdit,
+        handleDeleteCompany
     }
 }

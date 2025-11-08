@@ -7,6 +7,7 @@ import {
 import {Company} from "@/src/modules/companies/domain/entities/Company";
 import {generateUUID} from "@/src/shared/utils/GenerateUUID";
 import {UpdateCompanyCommand, UpdateCompanyResponse} from "../../application/useCases/UpdateCompanyUseCase";
+import {DeleteCompanyCommand, DeleteCompanyResponse} from "../../application/useCases/DeleteCompanyUseCase";
 
 export class CompanyApiRepository extends HttpClient implements ICompanyRepository {
     private companies: Company[] = [
@@ -22,6 +23,32 @@ export class CompanyApiRepository extends HttpClient implements ICompanyReposito
 
     constructor() {
         super(process.env.NEXT_PUBLIC_API_URL || "https://jsonplaceholder.typicode.com");
+    }
+
+    // async deleteCompany(command: DeleteCompanyCommand): Promise<DeleteCompanyResponse> {
+    //     const data = await this.delete<{
+    //         isDeleted: boolean;
+    //         message: string;
+    //     }>(companiesApiRoutes.deleteCompany(command.companyId));
+    //     return {
+    //         isDeleted: data.isDeleted,
+    //         message: data.message
+    //     }
+    // }
+
+    async deleteCompany(command: DeleteCompanyCommand): Promise<DeleteCompanyResponse> {
+        const index = this.companies.findIndex(c => c.id === command.companyId);
+
+        if (index === -1) {
+            throw new Error("Company not found");
+        }
+
+        this.companies.splice(index, 1);
+
+        return {
+            isDeleted: true,
+            message: `Company ${command.companyId} deleted`,
+        }
     }
 
     // async update(command: UpdateCompanyCommand): Promise<UpdateCompanyResponse> {
