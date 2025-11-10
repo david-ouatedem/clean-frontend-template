@@ -9,7 +9,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
 import {useUpdateCompany} from "@/src/modules/companies/ui/hooks/useUpdateCompany";
 import {Company} from "@/src/modules/companies/domain/entities/Company";
-import {UpdateCompanyCommand} from "@/src/modules/companies/application/useCases/UpdateCompanyUseCase";
+import {UpdateCompanyDTO} from "@/src/modules/companies/application/useCases/UpdateCompanyUseCase";
 import {useDeleteCompany} from "@/src/modules/companies/ui/hooks/useDeleteCompany";
 
 export type CompaniesBehavior = ReturnType<typeof useCompanies>;
@@ -81,7 +81,7 @@ export const useCompanies = () => {
 
     }
 
-    function handleUpdateCompany(command: UpdateCompanyCommand) {
+    function handleUpdateCompany(command: UpdateCompanyDTO) {
         if (!companyToUpdateId) {
             throw new Error("No company to update");
         }

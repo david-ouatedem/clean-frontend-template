@@ -1,7 +1,7 @@
 import {ICompanyRepository} from "@/src/modules/companies/domain/repositories/ICompanyRepository";
 import {Company} from "@/src/modules/companies/domain/entities/Company";
 
-export type CreateCompanyCommand = Omit<Company, "id">
+export type CreateCompanyDTO = Omit<Company, "id">
 
 export type CreateCompanyResponse = {
     company: Company;
@@ -12,7 +12,7 @@ export type CreateCompanyResponse = {
 export class CreateCompanyUseCase {
     constructor(private companyRepository: ICompanyRepository) {}
 
-    async execute(command: CreateCompanyCommand) {
+    async execute(command: CreateCompanyDTO) {
         const response = await this.companyRepository.create(command)
 
         if(!response.isSaved) {

@@ -1,13 +1,13 @@
 import {HttpClient} from "@/src/shared/infrastructure/http/HttpClient";
 import {ICompanyRepository} from "@/src/modules/companies/domain/repositories/ICompanyRepository";
 import {
-    CreateCompanyCommand,
+    CreateCompanyDTO,
     CreateCompanyResponse
 } from "@/src/modules/companies/application/useCases/CreateCompanyUseCase";
 import {Company} from "@/src/modules/companies/domain/entities/Company";
 import {generateUUID} from "@/src/shared/utils/GenerateUUID";
-import {UpdateCompanyCommand, UpdateCompanyResponse} from "../../application/useCases/UpdateCompanyUseCase";
-import {DeleteCompanyCommand, DeleteCompanyResponse} from "../../application/useCases/DeleteCompanyUseCase";
+import {UpdateCompanyDTO, UpdateCompanyResponse} from "../../application/useCases/UpdateCompanyUseCase";
+import {DeleteCompanyDTO, DeleteCompanyResponse} from "../../application/useCases/DeleteCompanyUseCase";
 
 export class CompanyApiRepository extends HttpClient implements ICompanyRepository {
     private companies: Company[] = [
@@ -25,6 +25,7 @@ export class CompanyApiRepository extends HttpClient implements ICompanyReposito
         super(process.env.NEXT_PUBLIC_API_URL || "https://jsonplaceholder.typicode.com");
     }
 
+
     // async deleteCompany(command: DeleteCompanyCommand): Promise<DeleteCompanyResponse> {
     //     const data = await this.delete<{
     //         isDeleted: boolean;
@@ -36,7 +37,7 @@ export class CompanyApiRepository extends HttpClient implements ICompanyReposito
     //     }
     // }
 
-    async deleteCompany(command: DeleteCompanyCommand): Promise<DeleteCompanyResponse> {
+    async deleteCompany(command: DeleteCompanyDTO): Promise<DeleteCompanyResponse> {
         const index = this.companies.findIndex(c => c.id === command.companyId);
 
         if (index === -1) {
@@ -56,7 +57,7 @@ export class CompanyApiRepository extends HttpClient implements ICompanyReposito
     //     return CompanyFactory.formatUpdateCompanyFromApiResponse(data, command);
     // }
 
-    async update(command: UpdateCompanyCommand): Promise<UpdateCompanyResponse> {
+    async update(command: UpdateCompanyDTO): Promise<UpdateCompanyResponse> {
         const index = this.companies.findIndex(c => c.id === command.id);
         if (index === -1) {
             throw new Error("Company not found");
@@ -96,7 +97,7 @@ export class CompanyApiRepository extends HttpClient implements ICompanyReposito
     //     return CompanyFactory.formatCreateCompanyFromApiResponse(data, command);
     // }
 
-    async create(command: CreateCompanyCommand): Promise<CreateCompanyResponse> {
+    async create(command: CreateCompanyDTO): Promise<CreateCompanyResponse> {
         // Mock Save
         const company: Company = {
             id: generateUUID(),

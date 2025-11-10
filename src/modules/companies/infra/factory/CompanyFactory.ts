@@ -1,10 +1,10 @@
 import {GetCompaniesApiResponse} from "@/src/modules/companies/infra/api-responses/GetCompaniesApiResponse";
 import {Company} from "@/src/modules/companies/domain/entities/Company";
 import {CreateCompanyApiResponse} from "@/src/modules/companies/infra/api-responses/CreateCompanyApiResponse";
-import {CreateCompanyCommand, CreateCompanyResponse} from "@/src/modules/companies/application/useCases/CreateCompanyUseCase";
+import {CreateCompanyDTO, CreateCompanyResponse} from "@/src/modules/companies/application/useCases/CreateCompanyUseCase";
 import {UpdateCompanyApiResponse} from "@/src/modules/companies/infra/api-responses/UpdateCompanyApiResponse";
 import {
-    UpdateCompanyCommand,
+    UpdateCompanyDTO,
     UpdateCompanyResponse
 } from "@/src/modules/companies/application/useCases/UpdateCompanyUseCase";
 
@@ -21,7 +21,7 @@ export class CompanyFactory {
         }));
     }
 
-    static formatCreateCompanyFromApiResponse(data: CreateCompanyApiResponse, command: CreateCompanyCommand): CreateCompanyResponse {
+    static formatCreateCompanyFromApiResponse(data: CreateCompanyApiResponse, command: CreateCompanyDTO): CreateCompanyResponse {
         return {
             company: {
                 id: data.companyId,
@@ -32,7 +32,7 @@ export class CompanyFactory {
         }
     }
 
-    static formatUpdateCompanyFromApiResponse(data: UpdateCompanyApiResponse, command: UpdateCompanyCommand): UpdateCompanyResponse {
+    static formatUpdateCompanyFromApiResponse(data: UpdateCompanyApiResponse, command: UpdateCompanyDTO): UpdateCompanyResponse {
         return {
             company: {
                 ...command,

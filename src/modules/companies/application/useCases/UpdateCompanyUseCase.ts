@@ -1,8 +1,8 @@
 import {ICompanyRepository} from "@/src/modules/companies/domain/repositories/ICompanyRepository";
-import {CreateCompanyCommand} from "@/src/modules/companies/application/useCases/CreateCompanyUseCase";
+import {CreateCompanyDTO} from "@/src/modules/companies/application/useCases/CreateCompanyUseCase";
 import {Company} from "@/src/modules/companies/domain/entities/Company";
 
-export interface UpdateCompanyCommand extends CreateCompanyCommand {
+export interface UpdateCompanyDTO extends CreateCompanyDTO {
     id: string;
 }
 
@@ -15,7 +15,7 @@ export interface UpdateCompanyResponse {
 export class UpdateCompanyUseCase {
     constructor(private companyRepository: ICompanyRepository) {}
 
-    async execute(command: UpdateCompanyCommand) {
+    async execute(command: UpdateCompanyDTO) {
         const response = await this.companyRepository.update(command);
 
         if (!response.isUpdated) {
