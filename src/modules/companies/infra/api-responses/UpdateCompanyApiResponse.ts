@@ -1,5 +1,6 @@
 export interface UpdateCompanyApiResponse {
-    statusCode: number;
-    isUpdated: boolean;
-    message: string;
+    companyName: string;
+    email: string;
+    phone: string;
+    address: string;
 }

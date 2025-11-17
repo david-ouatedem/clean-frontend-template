@@ -11,34 +11,35 @@ import {
 export class CompanyFactory {
 
     static formatGetCompaniesFromApiResponse(data: GetCompaniesApiResponse): Company[] {
-        return data.companies.map((company): Company => ({
-            id: company.company_id,
-            companyName: company.company_name,
-            email: company.company_email,
-            phone: company.company_phone,
-            address: company.company_address,
-            creationDate: company.created_at,
+        return data.map((company): Company => ({
+            id: company.id,
+            companyName: company.companyName,
+            email: company.email,
+            phone: company.phone,
+            address: company.address,
+            creationDate: company.creationDate,
         }));
     }
 
     static formatCreateCompanyFromApiResponse(data: CreateCompanyApiResponse, command: CreateCompanyDTO): CreateCompanyResponse {
         return {
             company: {
-                id: data.companyId,
-                ...command,
+                ...data
             },
-            isSaved: data.isSaved,
-            message: data.message
+            isSaved: !!data.id,
+            message: "Company Created Successfully",
         }
     }
 
     static formatUpdateCompanyFromApiResponse(data: UpdateCompanyApiResponse, command: UpdateCompanyDTO): UpdateCompanyResponse {
         return {
             company: {
-                ...command,
+                ...data,
+                id: command.id,
+                creationDate: command.creationDate,
             },
-            isUpdated: data.isUpdated,
-            message: data.message
+            isUpdated: !!data.companyName,
+            message: "Company Updated Successfully",
         }
     }
 }

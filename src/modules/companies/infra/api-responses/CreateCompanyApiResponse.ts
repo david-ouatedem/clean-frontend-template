@@ -1,6 +1,8 @@
 export interface CreateCompanyApiResponse {
-    statusCode: number;
-    isSaved: boolean;
-    message: string;
-    companyId: string;
+    id: string;
+    companyName: string;
+    email: string;
+    phone: string;
+    address: string;
+    creationDate: string;
 }
