@@ -29,12 +29,11 @@ export class CompanyApiRepository extends HttpClient implements ICompanyReposito
 
     async deleteCompany(command: DeleteCompanyDTO): Promise<DeleteCompanyResponse> {
         const data = await this.delete<{
-            isDeleted: boolean;
-            message: string;
+            success: boolean;
         }>(companiesApiRoutes.deleteCompany(command.companyId));
         return {
-            isDeleted: data.isDeleted,
-            message: data.message
+            isDeleted: data.success,
+            message: "Company deleted",
         }
     }
 

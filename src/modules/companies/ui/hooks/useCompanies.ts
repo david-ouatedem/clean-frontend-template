@@ -67,9 +67,7 @@ export const useCompanies = () => {
             }, {
                 onSuccess: (res) => {
                     console.log(res.message)
-                    setTimeout(() => {
                         handleClose()
-                    }, 1500);
                 }
             });
         } else {
@@ -90,9 +88,7 @@ export const useCompanies = () => {
         }, {
             onSuccess: (res) => {
                 console.log(res.message)
-                setTimeout(() => {
                     handleClose()
-                }, 1500);
             }
         })
     }
@@ -103,9 +99,7 @@ export const useCompanies = () => {
         }, {
             onSuccess: (res) => {
                 console.log(res.message)
-                setTimeout(() => {
                     handleClose()
-                }, 1500);
             }
         })
     }
